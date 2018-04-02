@@ -11,6 +11,8 @@ import xlrd
 from tkinter import filedialog
 # this is a sub module in tkinter and hence it should be imported separately
 
+import webbrowser
+# this we have imported to open link "http://www.siesgst.edu.in/"
 
 class MyGUI:
    
@@ -61,7 +63,7 @@ class MyGUI:
         self.forgotPasswordButton.place(x=415,y=420)
         
         # creating a visit website button for using php 
-        self.gotoWebsiteButton=Button(self.frame,text="visit our website",font=('Times',15,'bold italic'),bg="green",fg="black",activebackground="red",command=lambda:self.CommonMethod(4,self.root))
+        self.gotoWebsiteButton=Button(self.frame,text="visit our website",font=('Times',15,'bold italic'),bg="green",fg="black",activebackground="red",command=gui.OpenWebPage)
         self.gotoWebsiteButton.pack(fill=X,side=BOTTOM,pady=180)
         
         self.refreshButton=Button(self.frame,text="Refresh",font=('Times',15,'bold italic') ,bg="orange",activebackground="red",command=lambda: self.gohome(self.root))
@@ -222,7 +224,7 @@ class MyGUI:
             
             
         elif(num==2):
-            newadminroot.title("Update notice board or excel sheet")
+            newadminroot.title("Update notice board")
             #newadminroot , newadminFrame
             
             #let's create a menu bar for admin to open a text file
@@ -391,7 +393,7 @@ class MyGUI:
         lname=lastNameEntry.get().lower()
         username=usernameEntry.get()
         prn=prnEntry.get()
-        
+    
         
         
         db=MySQLdb.connect('localhost','root','','ostl')
@@ -414,6 +416,7 @@ class MyGUI:
                 FNAME=row[1]
                 LNAME=row[2]
                 USERNAME=row[3]
+    
                 if(fname==FNAME and lname==LNAME and username==USERNAME and prn==PRN):
                     flag=1;
                     break
@@ -658,11 +661,14 @@ class MyGUI:
             prnEntry=Entry(newFrame,width=20)
             prnEntry.place(x=310,y=295)
             
+            # we are going to create a spinbox for branch selection
             branchLabel=Label(newFrame,text="Branch ",bg="orange",fg="black",font=('Times',15,'bold italic'))
             branchLabel.place(x=200,y=340)
+            #let's create a controller for spinbox
+            branchEntry=StringVar()
             
-            branchEntry=Entry(newFrame,width=30)
-            branchEntry.place(x=310,y=345)
+            branchSpinbox=Spinbox(newFrame,values=('Computer Engineering','Mechanical Engineering','Information Technology','EXTC','PPT'),textvariable=branchEntry,width=30)
+            branchSpinbox.place(x=310,y=345)
             
             passLabel=Label(newFrame,text="Password ",bg="orange",fg="black",font=('Times',15,'bold italic'))
             passLabel.place(x=200,y=385)
@@ -709,12 +715,16 @@ class MyGUI:
             
             prnEntry=Entry(newFrame,width=30)
             prnEntry.place(x=310,y=295)
+          
             
+            # we are going to create a spinbox for branch selection
             branchLabel=Label(newFrame,text="Branch ",bg="orange",fg="black",font=('Times',15,'bold italic'))
             branchLabel.place(x=200,y=340)
+            #let's create a controller for spinbox
+            branchEntry=StringVar()
             
-            branchEntry=Entry(newFrame,width=10)
-            branchEntry.place(x=310,y=345)
+            branchSpinbox=Spinbox(newFrame,values=('Computer Engineering','Mechanical Engineering','Information Technology','EXTC','PPT'),textvariable=branchEntry,width=30)
+            branchSpinbox.place(x=310,y=345)
             
             passLabel=Label(newFrame,text="NEW Password ",bg="orange",fg="black",font=('Times',15,'bold italic'))
             passLabel.place(x=150,y=385)
@@ -730,7 +740,10 @@ class MyGUI:
             
             refresh=Button(newFrame,text="Refresh",bg="orange",fg="black",font=('Times',15,'bold italic'),command=lambda:gui.CommonMethod(3,new_root))
             refresh.place(x=800,y=100)
-            
+
+    @staticmethod
+    def OpenWebPage():
+        webbrowser.open("http://www.siesgst.edu.in/")
    
     # this method will change the password on user's request 
     @staticmethod
@@ -782,7 +795,7 @@ class MyGUI:
         # and if it is not found then print " Account not found"
         print(completeRecord)
         
-        sql="UPDATE moodle SET PASSWORD = '%s' WHERE PRN = '%s' AND USERNAME = '%s' AND FNAME = '%s' AND LNAME='%s' AND BRANCH='%s' " %(passwd,prn,username,fname,lname,branch)          
+        sql="UPDATE moodle SET PASSWORD = '%s' WHERE PRN = '%s' AND USERNAME = '%s' AND FNAME = '%s' AND LNAME='%s' AND BRANCH='%s'" %(passwd,prn,username,fname,lname,branch)          
                       
         try:
             cursor.execute(sql)
@@ -818,7 +831,7 @@ class MyGUI:
         
         username=usernameEntry.get()
         prn=prnEntry.get()
-        branch=branchEntry.get()
+        branch=branchEntry.get().lower()
         passwd=passEntry.get()        
         
         # this is a list of a particular batch
