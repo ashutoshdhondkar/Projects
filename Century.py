@@ -40,6 +40,12 @@ class CenturyRayon:
         self.img2 = self.img2.zoom(22)
         self.img2 = self.img2.subsample(50)
         Button(self.frame,image = self.img2,command=self.BlackList).place(x=1,y=210)
+        self.img3 = PhotoImage(file="update.gif")
+        self.img3 = self.img3.zoom(22)
+        self.img3 = self.img3.subsample(50)
+        Button(self.frame,image = self.img3,command = self.update).place(x=1,y=310)
+    def update(self):
+        pass
     def BlackList(self):
         self.root.destroy()
         self.root = Tk()
