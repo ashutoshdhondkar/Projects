@@ -111,8 +111,12 @@ class RestrictedEntry:
             self.date_in.set(self.dictionarydata['date_in'])    #set check_in date
             self.shift.set(self.dictionarydata['shift'])
             if(self.check==0):  #if the user is outside the premises bt admin hit in button so to avoid errors care is taken
+                self.date.set(self.dictionarydata['date_out'])
+                self.time.set(self.dictionarydata['check_out'])
                 tkinter.messagebox.showwarning('','The worker is not present inside the premises')
             else:
+                self.date.set(self.td.date())   # set check_out time
+                self.time.set(self.td.time())   # set check_out date
                 #update only time and date of escaping
                 DataBase.updateOutDateTime(self.ticket_number.get(),self.date.get(),self.time.get())
                 self.dictionarydata = DataBase.load(self.ticket_number.get())
