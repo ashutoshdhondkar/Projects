@@ -46,7 +46,7 @@ class RestrictedEntry:
         Button(self.root,text="Update",font=RestrictedEntry.allfont,bg=RestrictedEntry.bg,command=self.update).place(x=600,y=550)
         Button(self.root,text="Print",font=RestrictedEntry.allfont,bg=RestrictedEntry.bg,command=self.Print).place(x=400,y=550)
         Button(self.root,text="Clear",font=RestrictedEntry.allfont,bg=RestrictedEntry.bg,command=self.clear).place(x=200,y=550)
-        
+        Button(self.root,text="Close",font=RestrictedEntry.allfont,bg=RestrictedEntry.bg,command=lambda:self.root.destroy()).place(x=800,y=550)
         ################################################################################
         Label(self.root,text="Remark: ",bg=RestrictedEntry.bg,fg=RestrictedEntry.fg,font=RestrictedEntry.allfont).place(x=500,y=400)
         self.remark=Text(self.root,font=('Times',15,'bold'),wrap=WORD,height=5,width=30)
@@ -62,7 +62,7 @@ class RestrictedEntry:
         self.shift = StringVar()
     def In(self):
         self.check = DataBase.LoadCheck(self.ticket_number.get())
-        
+        self.dictionarydata = DataBase.load(self.ticket_number.get())
         if(self.UploadInfo()):
             Entry(self.root,textvariable=self.fullname,width=40,bd=5).place(x=200,y=200)
             Entry(self.root,textvariable=self.department,width=30,bd=5).place(x=200,y=250)
@@ -76,11 +76,16 @@ class RestrictedEntry:
             Label(self.root,textvariable = self.date,font=RestrictedEntry.allfont,bg=RestrictedEntry.bg).place(x=800,y=50)
             self.td = datetime.datetime.now()
             Label(self.root,textvariable = self.time,font=RestrictedEntry.allfont,bg=RestrictedEntry.bg).place(x=800,y=100)
-            self.date.set(self.td.date())
-            self.time.set(self.td.time())
+            #self.date.set(self.td.date())
+            #self.time.set(self.td.time())
             print("value of check in:{}".format(self.check))
             if(self.check==1):
+                self.date.set(self.dictionarydata['date_in'])
+                self.time.set(self.dictionarydata['check_in'])
                 tkinter.messagebox.showwarning('','The worker is already inside the premises')
+            else:
+                self.date.set(self.td.date())
+                self.time.set(self.td.time())
         else:
             tkinter.messagebox.showwarning('','User not enrolled')
     def Out(self):
