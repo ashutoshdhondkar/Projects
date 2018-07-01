@@ -321,7 +321,6 @@ class DataBase:
                             Remark=?,card_lost=?,check_in=?,check_out=null,date_in=?,date_out=null,reason_for_memo=?,
                             flag=1,shift=?,department_code=?  WHERE TicketNo=?; ''',(remark,cardLost,time,date,memo,shift,dept_code,ticket_number))
         cls.db.commit()
-        pass
     @classmethod
     def updateAdmin(cls,ticket_number,memo,remark,cardLost):
         cls.db.execute('''UPDATE LABOURS SET
