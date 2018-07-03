@@ -283,7 +283,13 @@ class RestrictedEntry:
             Entry(self.root,textvariable=self.fullname,width=40,bd=5).place(x=250,y=200)
             Entry(self.root,textvariable=self.department,width=30,bd=5).place(x=250,y=250)
             Entry(self.root,textvariable=self.shift,width=30,bd=5).place(x=250,y=300)
-            Entry(self.root,bd=5,width=50,textvariable=self.memo).place(x=800,y=350)
+            
+            #####
+            self.choices = ['hello','world','how am i looking?']
+            #Spinbox(self.root,values=self.choices,textvariable=self.memo,width=30).place(x=800,y=350)
+            OptionMenu(self.root,self.memo,*self.choices).place(x=800,y=350)
+            ####
+            #Entry(self.root,bd=5,width=50,textvariable=self.memo).place(x=800,y=350)
             Entry(self.root,textvariable=self.dept_code,bd=5,width=30).place(x=250,y=350)
             Entry(self.root,bd=5,width=20,textvariable=self.cardLost).place(x=800,y=300)
                 # check in update into database
