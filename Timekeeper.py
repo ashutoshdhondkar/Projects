@@ -482,7 +482,9 @@ class RestrictedEntry:
         ticket = str(self.ticket_number.get())+".PNG"
         #print(ticket)
         try:
-            self.img=PhotoImage(file=ticket)
+            path="/Photo/"+str(self.ticket_number.get())+".PNG"
+            self.img=PhotoImage(file=path)
+            #self.img=PhotoImage(file=ticket)
             self.img=self.img.zoom(25,25)
             self.img=self.img.subsample(50)
             Label(self.root,image=self.img).place(x=50,y=450)
