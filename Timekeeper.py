@@ -23,14 +23,45 @@ class RestrictedEntry:
     allfont=('Normal',15,'bold')
     fg="black"
     
-    def MainPage(self,root):
-        self.root=root
+    def Login(self,root):
+        self.root = root
+        self.root.geometry("800x500")
+        self.root['bg']="black"
+        self.root.title(RestrictedEntry.title)
+        self.username = StringVar()
+        self.password = StringVar()
+        
+        Label(self.root,text="Century Rayon - Time Office",bg="black",fg="white",font=('Normal',25)).place(x=200,y=50)
+        self.allowedUsers=['bhalchandra','maske']
+        
+        Label(self.root,text="USERNAME : ",bg="black",fg="white",font=('Normal bold',15)).place(x=50,y=150)
+        Entry(self.root,bd=5,width=50,textvariable=self.username,bg="powder blue").place(x=200,y=150)
+        Label(self.root,text="PASSWORD : ",bg="black",fg="white",font=('Normal bold',15)).place(x=50,y=250)
+        Entry(self.root,bd=5,width=50,show='@',textvariable=self.password,bg="powder blue").place(x=200,y=250)
+        Button(self.root,text="Log in",bg="cyan",width="30",command=self.Log).place(x=250,y=350)
+        
+        Label(self.root,text="Coded by : Ashutosh Dhondkar",bg="black",fg="white",font=('Normal',15,'bold')).place(x=50,y=400)
+        Label(self.root,text="Contact:    ashutoshdhondkar@gmail.com",bg="black",fg="white",font=('Normal',15,'bold')).place(x=50,y=450)
+    
+    def Log(self):
+        if(self.username.get() in self.allowedUsers and self.password.get()=="cenray"):
+            #self.root.destroy()
+            self.MainPage()
+        else:
+            tkinter.messagebox.showerror('','Wrong password')
+            
+    
+    def MainPage(self):
+        self.root.destroy()
+        self.root=Tk()
         #self.root.overrideredirect(True)
         self.root.geometry("{}x{}+0+0".format(self.root.winfo_screenwidth(),self.root.winfo_screenheight()))
         self.root['bg']=RestrictedEntry.bg
         self.root.title(RestrictedEntry.title)
         self.ticket_number = StringVar()
-        
+        self.user = StringVar()
+        Label(self.root,textvariable=self.user,bg=RestrictedEntry.bg,fg=RestrictedEntry.fg,font=RestrictedEntry.allfont).place(x=300,y=150)
+        self.user.set(self.username.get())
         Label(self.root,text="Century Rayon - Time Office",bg=RestrictedEntry.bg,fg='blue',font=('Normal',18,'bold italic underline')).place(x=500,y=0)
         Label(self.root,text="Enter Ticket number:",bg=RestrictedEntry.bg,fg=RestrictedEntry.fg,font=RestrictedEntry.allfont).place(x=100,y=50)
         Entry(self.root,textvariable=self.ticket_number,width=30,bd=5).place(x=350,y=50)
@@ -48,11 +79,12 @@ class RestrictedEntry:
         self.memo = StringVar()
         Label(self.root,text="Reason for memo: ",font=RestrictedEntry.allfont,bg=RestrictedEntry.bg).place(x=600,y=350)
         
-        Button(self.root,text="Update",font=RestrictedEntry.allfont,bg=RestrictedEntry.bg,command=self.update).place(x=600,y=600)
-        Button(self.root,text="Print",font=RestrictedEntry.allfont,bg=RestrictedEntry.bg,command=self.Print).place(x=400,y=600)
-        Button(self.root,text="Clear",font=RestrictedEntry.allfont,bg=RestrictedEntry.bg,command=self.clear).place(x=200,y=600)
-        Button(self.root,text="Close",font=RestrictedEntry.allfont,bg=RestrictedEntry.bg,command= lambda: root.destroy()).place(x=800,y=600)
-        Button(self.root,text="New Employee",font=RestrictedEntry.allfont,bg=RestrictedEntry.bg,command = self.newUser).place(x=1000,y=600)
+        Button(self.root,text="Update",font=RestrictedEntry.allfont,bg=RestrictedEntry.bg,command=self.update).place(x=100,y=600)
+        Button(self.root,text="Print",font=RestrictedEntry.allfont,bg=RestrictedEntry.bg,command=self.Print).place(x=200,y=600)
+        Button(self.root,text="Clear",font=RestrictedEntry.allfont,bg=RestrictedEntry.bg,command=self.clear).place(x=300,y=600)
+        Button(self.root,text="Close",font=RestrictedEntry.allfont,bg=RestrictedEntry.bg,command= self.close).place(x=400,y=600)
+        Button(self.root,text="New Employee",font=RestrictedEntry.allfont,bg=RestrictedEntry.bg,command = self.newUser).place(x=500,y=600)
+        Button(self.root,text="Log Out",font=RestrictedEntry.allfont,bg=RestrictedEntry.bg,command=self.LogOut).place(x=700,y=600)
         ################################################################################
         Label(self.root,text="Remark: ",bg=RestrictedEntry.bg,fg=RestrictedEntry.fg,font=RestrictedEntry.allfont).place(x=600,y=400)
         self.remark=Text(self.root,font=('Times',15,'bold'),wrap=WORD,height=5,width=30)
@@ -62,12 +94,17 @@ class RestrictedEntry:
         ################################################################################
         
         #self.cardLost = StringVar()
-        #Label(self.root,text="Card Lost: ",font=RestrictedEntry.allfont,bg=RestrictedEntry.bg).place(x=600,y=300)
+        Label(self.root,text="Log In: ",font=RestrictedEntry.allfont,bg=RestrictedEntry.bg).place(x=200,y=150)
         self.date = StringVar()
         self.time = StringVar()
         self.shift = StringVar()
         self.dept_code = StringVar()
-        
+    def LogOut(self):
+        self.root.destroy()
+        root=Tk()
+        self.Login(root)
+    def close(self):
+        self.root.destroy()
 #***********************************************************************************************************
     def newUser(self):
         self.root.destroy()
@@ -104,9 +141,7 @@ class RestrictedEntry:
         self.date_in = StringVar()
         self.date_out = StringVar()
     def temp(self):
-        self.root.destroy()
-        root=Tk()
-        self.MainPage(root)
+        self.MainPage()
     
     def NewIn(self):
         if(self.ticket_number.get()):
@@ -128,7 +163,7 @@ class RestrictedEntry:
                 self.department.set(self.dictionarydata['department'])
                 self.memo.set(self.dictionarydata['reason_for_memo'])
                 self.shift.set(self.dictionarydata['shift'])
-                print(self.dictionarydata)
+                #print(self.dictionarydata)
                 #self.time = self.td.hour + self.td.minute
                 if(self.dictionarydata['flag']==1):
                     self.check_in.set(self.dictionarydata['check_in'])
@@ -221,6 +256,12 @@ class RestrictedEntry:
         
         pdf.set_xy(60,50)
         pdf.cell(ln=0, h=0, w=0, txt="Dept Head SIGN", border=0)
+        
+        pdf.set_xy(20,60)
+        pdf.cell(ln=0, h=0, w=0, txt="Timekeeper: ", border=0)
+                
+        pdf.set_xy(60,60)
+        pdf.cell(ln=0, h=0, w=0, txt=self.username.get(), border=0)
                 
         try:
             pdf.output('Timekeeper.pdf')
@@ -295,10 +336,10 @@ class RestrictedEntry:
             Spinbox(self.root,values=self.choices,textvariable=self.memo,width=30).place(x=800,y=350)
             #OptionMenu(self.root,self.memo,*self.choices).place(x=800,y=350)
             ####
-            E#ntry(self.root,bd=5,width=50,textvariable=self.memo).place(x=800,y=350)
+            #Entry(self.root,bd=5,width=50,textvariable=self.memo).place(x=800,y=350)
             
             Entry(self.root,textvariable=self.dept_code,bd=5,width=30).place(x=250,y=350)
-            #Entry(self.root,bd=5,width=20,textvariable=self.cardLost).place(x=800,y=300)
+            #Label(self.root,bd=5,width=20,textvariable=self.username.get(),bg=RestrictedEntry.bg,fg=RestrictedEntry.fg,font=RestrictedEntry.allfont).place(x=800,y=300)
                 # check in update into database
             Label(self.root,text="Check in Date: ",font=RestrictedEntry.allfont,bg=RestrictedEntry.bg).place(x=600,y=50)
             Label(self.root,text="Check in Time: ",font=RestrictedEntry.allfont,bg=RestrictedEntry.bg).place(x=600,y=100)
@@ -307,7 +348,7 @@ class RestrictedEntry:
             Label(self.root,textvariable = self.time,font=RestrictedEntry.allfont,bg=RestrictedEntry.bg).place(x=800,y=100)
             #self.date.set(self.td.date())
             #self.time.set(self.td.time())
-            print("value of check in:{}".format(self.check))
+            #print("value of check in:{}".format(self.check))
             self.dictionarydata = DataBase.load(self.ticket_number.get())
             if(self.check==1):
                 self.date.set(self.dictionarydata['date_in'])
@@ -331,6 +372,8 @@ class RestrictedEntry:
             self.check_in = StringVar()
             self.date_in = StringVar()
             
+            #Label(self.root,bd=5,width=20,textvariable=self.username.get(),bg=RestrictedEntry.bg,fg=RestrictedEntry.fg,font=RestrictedEntry.allfont).place(x=800,y=300)
+
             #Label(self.root,textvariable=self.cardLost,font=RestrictedEntry.allfont,bg=RestrictedEntry.bg).place(x=800,y=300)
             Label(self.root,text="Check in Date: ",font=RestrictedEntry.allfont,bg=RestrictedEntry.bg).place(x=600,y=50)
             Label(self.root,text="Check in Time: ",font=RestrictedEntry.allfont,bg=RestrictedEntry.bg).place(x=600,y=100)
@@ -454,17 +497,21 @@ class RestrictedEntry:
                 try:
                     pdf.image(self.path, 60, 55, 22,22)
                 except Exception as e:
-                    print(e)
+                    #print(e)
                     pdf.set_xy(60,55)
                     pdf.cell(ln=0, h=0, w=0, txt="Photo not available", border=0)
                 
-                pdf.set_font('arial','',10)
-                
-                
                 pdf.set_xy(20,80)
-                pdf.cell(ln=0, h=0, w=0, txt="SIGN", border=0)
+                pdf.cell(ln=0, h=0, w=0, txt="Timekeeper: ", border=0)
                 
                 pdf.set_xy(60,80)
+                pdf.cell(ln=0, h=0, w=0, txt=self.username.get(), border=0)
+                
+                
+                pdf.set_xy(20,90)
+                pdf.cell(ln=0, h=0, w=0, txt="SIGN", border=0)
+                
+                pdf.set_xy(60,90)
                 pdf.cell(ln=0, h=0, w=0, txt="DEPT. HEAD SIGN", border=0)
                 
                 # sign
@@ -493,9 +540,7 @@ class RestrictedEntry:
             tkinter.messagebox.showwarning('','Enter Ticket number')
     
     def clear(self):
-        self.root.destroy()
-        root = Tk()
-        self.MainPage(root)
+        self.MainPage()
         
     def UploadInfo(self):
         
@@ -516,7 +561,7 @@ class RestrictedEntry:
             '''
             Label(self.root,image=self.img).place(x=50,y=450)
         except Exception as e:
-            print(e)
+            #print(e)
             Label(self.root,text="unable to load image").place(x=50,y=450)
         self.dictionarydata={}
         
@@ -596,7 +641,7 @@ class DataBase:
     def LoadCheck(cls,ticket_number):
         try:
             check=list(cls.db.execute("SELECT flag FROM LABOURS WHERE TicketNo='%s';"%(ticket_number)))
-            print(check[0][0])
+            #print(check[0][0])
             return (check[0][0])
 
             # there was problem loading only check so had to do it in this manner
@@ -614,7 +659,8 @@ class NewDataBase(DataBase):
                                         '''%(ticket_number,fullname,memo,check_in,date_in,shift,department))
             cls.db.commit()
         except Exception as e:
-            print(e)
+            pass
+            #print(e)
     
     @classmethod
     def UpdateOut(cls,ticket_number,check_out,date_out):
@@ -664,8 +710,7 @@ class NewDataBase(DataBase):
         else:
             return False
         
-        
-root=Tk()
+root = Tk()
 re = RestrictedEntry()
-re.MainPage(root)
+re.Login(root)
 root.mainloop()
