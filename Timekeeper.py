@@ -32,8 +32,8 @@ class RestrictedEntry:
         self.password = StringVar()
         
         Label(self.root,text="Century Rayon - Time Office",bg="black",fg="white",font=('Normal',25)).place(x=200,y=50)
-        self.allowedUsers=['bhalchandra','maske']
-        
+        self.allowedUsers=['bhalchandra_bhoir','sandeep_shukla','deepak_sharma','ramesh_kumar','sanjay_sharma','jitendra_mishra','amit_joshi']
+        self.passwd=['cenray','primarypassword']
         Label(self.root,text="USERNAME : ",bg="black",fg="white",font=('Normal bold',15)).place(x=50,y=150)
         Entry(self.root,bd=5,width=50,textvariable=self.username,bg="powder blue").place(x=200,y=150)
         Label(self.root,text="PASSWORD : ",bg="black",fg="white",font=('Normal bold',15)).place(x=50,y=250)
@@ -44,7 +44,7 @@ class RestrictedEntry:
         Label(self.root,text="Contact:    ashutoshdhondkar@gmail.com",bg="black",fg="white",font=('Normal',15,'bold')).place(x=50,y=450)
     
     def Log(self):
-        if(self.username.get() in self.allowedUsers and self.password.get()=="cenray"):
+        if(self.username.get() in self.allowedUsers and self.password.get() in self.passwd):
             #self.root.destroy()
             self.MainPage()
         else:
@@ -175,6 +175,7 @@ class RestrictedEntry:
             else:
                 self.check_in.set("%0.2d:%0.2d"%(self.td.hour,self.td.minute))
                 self.date_in.set(self.td.date())
+			
         else:
             tkinter.messagebox.showwarning('','Please enter ticket number')
             
@@ -186,6 +187,11 @@ class RestrictedEntry:
                 else:
                     NewDataBase.InsertIn(self.ticket_number.get(),self.fullname.get(),self.memo.get(),self.check_in.get(),self.date_in.get(),self.shift.get(),self.department.get())
                 self.PrintData()
+                fp = open("D:/TimeKeeper_stuffs/Personal Database/Logs/"+str(self.td.date())+".txt",'a')
+                writedata=['5199',str(self.dictionarydata['date_in']),str(self.dictionarydata['check_in']),str(self.ticket_number.get()),'I']
+                fp.write('||'.join(writedata))
+                fp.write("\n")
+                fp.close()
             else:
                 tkinter.messagebox.showwarning('','Fill in all the fields')
         else:
@@ -251,16 +257,19 @@ class RestrictedEntry:
         pdf.cell(ln=0, h=0, w=0, txt=self.dictionarydata['shift'], border=0)
 
         #pdf.set_font('arial', 'B', 10)
-        pdf.set_xy(20,50)
-        pdf.cell(ln=0, h=0, w=0, txt="SIGN", border=0)
+		
+        pdf.line(20,55,50,55)
+        pdf.set_xy(20,60)
+        pdf.cell(ln=0, h=0, w=0, txt="sign of employee", border=0)
         
-        pdf.set_xy(60,50)
+        pdf.line(60,55,100,55)
+        pdf.set_xy(60,60)
         pdf.cell(ln=0, h=0, w=0, txt="Dept Head SIGN", border=0)
         
-        pdf.set_xy(20,60)
+        pdf.set_xy(20,70)
         pdf.cell(ln=0, h=0, w=0, txt="Timekeeper: ", border=0)
                 
-        pdf.set_xy(60,60)
+        pdf.set_xy(60,70)
         pdf.cell(ln=0, h=0, w=0, txt=self.username.get(), border=0)
                 
         try:
@@ -312,7 +321,7 @@ class RestrictedEntry:
                     self.dictionarydata = NewDataBase.LoadData(self.ticket_number.get())
                     if(self.dictionarydata):
                         fp = open("D:/TimeKeeper_stuffs/Personal Database/Logs/"+str(self.td.date())+".txt",'a')
-                        writedata=[str(self.dictionarydata['date_in']),str(self.dictionarydata['check_in']),str(self.dictionarydata['check_out']),str(self.ticket_number.get())]
+                        writedata=['5199',str(self.dictionarydata['date_in']),str(self.dictionarydata['date_out']),str(self.dictionarydata['check_in']),str(self.dictionarydata['check_out']),str(self.ticket_number.get()),'O']
                         fp.write('||'.join(writedata))
                         fp.write("\n")
                         fp.close()
@@ -357,6 +366,7 @@ class RestrictedEntry:
             else:
                 self.date.set(self.td.date())
                 self.time.set("%0.2d:%0.2d"%(self.td.hour,self.td.minute))
+            
         else:
             tkinter.messagebox.showwarning('','User not enrolled')
     def Out(self):
@@ -402,8 +412,8 @@ class RestrictedEntry:
                 self.dictionarydata = DataBase.load(self.ticket_number.get())
                 #load all the data of ticket number from database
                 if(self.dictionarydata):
-                    fp = open("C:/Users/Ashutosh/My Documents/LiClipse Workspace/Trial/Logs/"+str(self.td.date())+".txt",'a')
-                    writedata=[self.dictionarydata['date_in'],self.dictionarydata['check_in'],self.dictionarydata['check_out'],self.ticket_number.get()]
+                    fp = open("D:/TimeKeeper_stuffs/Personal Database/Logs/"+str(self.td.date())+".txt",'a')
+                    writedata=['5199',self.dictionarydata['date_in'],self.dictionarydata['date_out'],self.dictionarydata['check_in'],self.dictionarydata['check_out'],self.ticket_number.get(),'O']
                     fp.write('||'.join(writedata))
                     fp.write("\n")
                     fp.close()
@@ -501,17 +511,19 @@ class RestrictedEntry:
                     pdf.set_xy(60,55)
                     pdf.cell(ln=0, h=0, w=0, txt="Photo not available", border=0)
                 
-                pdf.set_xy(20,80)
+                pdf.set_xy(20,100)
                 pdf.cell(ln=0, h=0, w=0, txt="Timekeeper: ", border=0)
                 
-                pdf.set_xy(60,80)
+                pdf.set_xy(60,100)
                 pdf.cell(ln=0, h=0, w=0, txt=self.username.get(), border=0)
                 
+                pdf.line(20,90,50,90)
                 
-                pdf.set_xy(20,90)
-                pdf.cell(ln=0, h=0, w=0, txt="SIGN", border=0)
+                pdf.set_xy(20,95)
+                pdf.cell(ln=0, h=0, w=0, txt="sign of employee", border=0)
                 
-                pdf.set_xy(60,90)
+                pdf.line(60,90,100,90)
+                pdf.set_xy(60,95)
                 pdf.cell(ln=0, h=0, w=0, txt="DEPT. HEAD SIGN", border=0)
                 
                 # sign
@@ -524,6 +536,11 @@ class RestrictedEntry:
                     tkinter.messagebox.showerror('','Please close the previous pdf file')
                 else:
                     wb.open('timekeeper.pdf')
+                    fp=open("D:/TimeKeeper_stuffs/Personal Database/Logs/"+str(self.td.date())+".txt",'a') 
+                    data = ['5199',self.dictionarydata['date_in'],self.dictionarydata['check_in'],self.ticket_number.get(),'I']
+                    fp.write('||'.join(data))
+                    fp.write("\n")
+                    fp.close()
             else:
                 tkinter.messagebox.showwarning('','The print has already been generated')
         else:
@@ -594,7 +611,7 @@ class RestrictedEntry:
     # decide whether the worker is inside or outside the company premises and at what time he left
     
 class DataBase:
-    db = sqlite3.connect('C:/Users/Ashutosh/My Documents/LiClipse Workspace/Niit project/Century_Rayon.db')
+    db = sqlite3.connect('D:/TimeKeeper_stuffs/Personal Database/TimekeeperData.db')
     @classmethod
     def CreateTable(cls):
         pass
