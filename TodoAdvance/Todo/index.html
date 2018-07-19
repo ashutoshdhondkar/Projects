@@ -1,0 +1,31 @@
+{% load static %}
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Todo</title>
+        <link rel="stylesheet" href="{% static 'Todo/index.css' %}"/>
+    </head>
+    <body>
+        <marquee scrollamount="10">The website domain is for sale. Please contact at +919819270718</marquee>
+        <div align="center">
+            <form method="POST" action="{% url 'add' %}">
+            {% csrf_token %}
+                <h1><u>What you want to do today</u> ?</h1>
+                {{ form.task }}
+                <input type="submit" value="ADD">
+                <br><br>
+                <button type="button"><a href="{% url 'deleteco' %}">Delete Completed</a></button>
+                <button type="button" id="unique"><a href="{% url 'ashutosh' %}">Delete all</a></button>
+                {% for each in data %}
+                    {% if each.complete %}
+                        <p><del>{{ each.task }}</del></p>    
+                    {% else %}
+                        <p id="not"><a href="{% url 'complete' each.id %}">{{ each.task }}</a></p>
+                    {% endif %}
+                {% endfor %}
+            </form>
+        </div>
+        <h3 align="center" style="color:aqua">&copy;Written by Ashutosh Dhondkar</h3>
+    </body>
+</html>
