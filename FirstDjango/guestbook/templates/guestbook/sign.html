@@ -1,0 +1,26 @@
+{% load static %}
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Sign in Page</title>
+		<link rel="stylesheet" href="{% static 'index.css' %}">
+	</head>
+	<body>
+		<h1 align="center">welcome to comments section</h1>
+		<br>
+		<form align="center" method="post">
+			{% csrf_token %}
+			<label>Name</label><br>
+			<input type="text" name="name" id="name" placeholder="enter your name">
+			<br><br>
+			<label>comment</label>
+			<br>
+			<textarea name = "comment" id="comment" placeholder="add comment"
+				rows="5" cols="40"
+			></textarea>
+			<br><br>
+			<input type="submit" value="Add my comment">
+		</form>
+	</body>
+</html>

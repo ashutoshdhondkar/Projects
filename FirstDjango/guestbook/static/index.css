@@ -1,0 +1,54 @@
+body{
+	background-color:yellow;
+	color: blue;
+	font-weight:bold;
+	font-size:30px;
+}
+input[type="text"],textarea{
+	padding: 15px;
+	border-radius:10px;
+	width:500px;
+	font-size:20px;
+	text-align: center;
+
+}
+textarea{
+	width:700px;
+	height:200px;
+}
+input,textarea::placeholder{
+	font-size:20px;
+}
+input[type="submit"]{
+	padding:10px;
+	width:700px;
+	background:lightblue;
+	color:blue;
+	font-weight:bold;
+}
+
+/* styling for homepage */
+.welcome{
+	width:600px;
+	font-size:20px;
+	text-align:center;
+	margin:0px auto;
+}
+.ui{
+	width:400px;
+	margin:0px auto;
+	border:2px solid black;
+	border-radius:10px;
+	float:left;
+	margin: 20px;
+	padding:10px;
+	background: lightpink;
+	color:black;
+}
+.central{
+	width:1000px;
+	margin:0px auto;
+}
+.name{
+	color:darkblue;
+}
