@@ -1,0 +1,35 @@
+{% load static %}
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Comments Section</title>
+		<link rel="stylesheet" href="{% static 'index.css' %}">
+		<script type="text/javascript" src = "{{ STATIC_URL }}/static/jquery-3.3.1.min.js"></script>
+		<script>
+			$(document).ready(function(){
+				$('.ui').click(function(){
+					$(this).fadeOut();
+				});
+			});
+			$(document).bind("contextmenu",function(e){
+				return false;
+			});
+		</script>
+	</head>
+	<body>
+		<div class="welcome">
+			<h1 align="center">Welcome to Guestbook Comments</h1>
+			<h3><a href="{% url 'sign' %}">Click here to sign in</a></h3>
+		</div>
+		<br><br>
+		<div class="central">
+		{% for x in comments %}
+			<div class="ui">
+				<h3 class='name'>{{ x.name }}</h3>
+				<p>{{ x.comments }}</p>
+			</div>
+		{% endfor %}
+		</div>
+	</body>
+</html>
