@@ -1,0 +1,33 @@
+body{
+    width:800px;
+/*    because we want our form to be placed at middle */
+    margin:auto;
+    text-align: center;
+}
+
+/* removing the bullets from list */
+li{
+    list-style: none;
+}
+
+/* styling the fields of each form */
+li.fields{
+    margin:0px;
+    padding: 1cm 0m;
+}
+
+/* styling the title of each sub form */
+li.title{
+    cursor:pointer;
+    font-weight:bold;
+    font-size:1.5cm;
+    line-height:2cm;
+    /* light gray background color */
+    background-color:#DCDCDC;
+    /* bordering the bottom side of title element */
+    border-bottom : 1px solid gray;
+    border-top:2px solid white;
+}
+
+/* for javascript */
+.hide{display:none;}

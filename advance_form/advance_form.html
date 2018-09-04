@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name = "description" content="This is an advance form">
+        <title>Registration Section</title>
+        <script src="jquery-3.3.1.min.js"></script>
+        <link rel="stylesheet" href="advance_form.css">
+        <script>
+            $(document).ready(function(){
+                
+                /* initially display only the who are you form */
+                $('li.fields').filter(':nth-child(n+3)').addClass('hide');
+                
+                $('li.title').click(function(){
+                    $('li.title').click(function(){
+                        $(this).next().slideDown('slow').siblings().filter('li.fields').slideUp('slow');
+                    });
+                });
+            });
+        </script>
+        
+        <script>
+            /* form validation */
+            function validateForm(){
+                for(var i=0;i<myform.elements.length;i++){
+                    if(myform.elements[i].className=='req' && myform.elements[i].value.length==0){
+                        alert("Please enter all the fields");
+                        return false;
+                    }
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <!-- now we have to use advance form in the form of a list -->
+        <form name="myform" onsubmit="return validateForm();">
+            <ul>
+                <li class="title">Who are you ?</li>
+                <li class="fields">
+                    <label>*First Name : </label><br>
+                    <input type="text" id="first_name" class="req"><br>
+                    <label>*Middle Name : </label><br>
+                    <input type="text" id="middle_name" class = "req"><br>
+                    <label>*Last Name : </label><br>
+                    <input type="text" id="last_name" class="req"><br>
+                    <label>*Email Id : </label><br>
+                    <input type="email" id="email" class="req"><br>
+                </li>
+                <li class="title">Where are you ?</li>
+                <li class="fields">
+                    <label>*City : </label><br>
+                    <input type="text" id="city" class="req"><br>
+                    <label>*State : </label><br>
+                    <input type="text" id="state" class="req"><br>
+                    <label>Country : </label><br>
+                    <input type="text" id="country"><br>
+                </li>
+                <li class="title">What do you do ?</li>
+                <li class="fields">
+                    <label>*Occupation</label><br>
+                    <input type="text" id="occupation" class="req"><br>
+                    <label>*Company</label><br>
+                    <input type="text" id="company" class="req"><br>
+                    <label>Company location : </label><br>
+                    <input type="text" id="location"><br>
+                </li>
+            </ul>
+            <input type="submit" value="submit form">
+        </form>
+    </body>
+</html>
