@@ -1,0 +1,73 @@
+<!-- login page for quiz -->
+{% load static %}
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Python Quiz - Most searched quiz</title>
+        <link rel="stylesheet" href = "{% static 'quiz/loginpage.css' %}">
+        <script>
+            function validateLogin(){
+                for(var i=0;i<loginform.elements.length;i++){
+                    if(loginform.elements[i].value.length == 0){
+                        alert("username and password didn't matched");
+                        return false;
+                    }
+                }
+            }
+            
+            function validateRegistration(){
+                for(var i=0;i<registrationform.elements.length;i++){
+                    if(registrationform.elements[i].value.length == 0 && registrationform.elements[i].className == 'req'){
+                        alert("Please fill in all the * marked details");
+                        return false;
+                    }
+                }
+                var phone = document.getElementById('phoneno').value.length;
+                if(phone>0){
+                    if(phone!=10){
+                        alert("Please enter a valid phone number");
+                    }
+                }
+
+                var user = {{ error }}
+                if(user == 'username already taken'){
+                    alert("username already taken");
+                }
+            }
+        </script>
+        
+    </head>
+    <body>
+        <h1 align="center">PYTHON QUIZ</h1><br><br>
+        <div class = "loginpanel">
+            <form action="{% url 'check' %}" method="post" name="loginform">
+                {% csrf_token %}
+                <h2 align="center">Login Panel</h2><br><br>
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="username" name="loginusername"><br><br><br>
+                <label for="password">Password</label>
+                <input type="password" name="loginpassword" id="password" placeholder="password"><br><br>
+                <input type="submit" value="login" onclick="validateLogin();" id="loginbutton"><br><br>
+            </form>
+        </div>
+        <br><br>
+        <div class="registrationpanel">
+            <form action = "{% url 'register' %}" name="registrationform" method="POST">
+                {% csrf_token %}
+                <h2 align="center">Registration Panel</h2><br><br>
+                <label for="username">*Username</label><br><br>
+                <input type="text" id="username" placeholder="new username" name="username" class='req'><br><br>
+                <label for="password">*Password</label><br><br>
+                <input type="password" id="password" name="password" placeholder="new password" class='req'><br><br>
+                <label for="email">*email id</label><br><br>
+                <input type="email" id="email" name="email" placeholder="enter email address" class='req'><br><br>
+                <label for="phoneno">Phone no.</label><br><br>
+                <input type="tel" id="phoneno" name="phoneno" placeholder="phone number"><br><br><br><br>
+                <input type="submit" name="register" value="free register" onclick = "validateRegistration();"><br>
+            </form>
+            
+
+        </div>
+    </body>
+</html>
