@@ -1,0 +1,78 @@
+body{
+	background-color:#f7efed; 
+}
+.container{
+	margin:2cm 20%;
+	box-sizing: border-box;
+}
+.Q{
+	margin-top:1cm;
+}
+.options{
+	padding:10px 10%;
+	/*background-color:#fce6df;*/
+	margin:30px 0px;
+	background-color: #e4e4e4;
+	/*font-family: Verdana;*/
+	font-weight: bold;
+	/*font-size:20px;*/
+	border-radius: 10px;
+	box-shadow: 10px 10px #aca1a1;
+}		
+.options label{
+	font-size:20px;
+}
+h2{
+	
+	font-family: /*Helvetica;*/
+}
+.quest{
+	/*box-shadow: 10px 10px #b1d1ec;*/
+	display:block;
+	background: #92b4f2;
+	border-radius: 5px;
+	box-sizing: border-box;
+	border:2px solid black;
+
+}
+.quest h2{
+	padding:5px;
+	text-align:center;
+}
+.header{
+	top:0px;
+	position: fixed;
+	display: inline-block;
+	box-sizing: border-box;
+}
+.container button{
+	padding:15px;
+	border-radius: 10px;
+	border:none;
+	width:20%;
+	background-color:orange;
+	font-size:30px;
+	font-family: Monotype Corsiva;
+	font-weight:900;
+	color:black;
+	margin:20px 40%;
+	box-sizing: border-box;
+	border:2px solid black;
+}
+.header .logout{
+	margin-left:30%;
+	margin-top:1cm;
+	padding:10px;
+	border-radius: 2px;
+	background-color: #b1c7ee;
+	font-family: Bookman old style;
+	font-weight:900;
+	font-size:20px;
+}
+.result{
+	font-family: Bookman old style;
+	font-size:50px;
+	margin:0px 20%;
+	/*border: 2px solid black;*/
+	text-align: center;
+}

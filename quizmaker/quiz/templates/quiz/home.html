@@ -1,0 +1,75 @@
+{% load static %}
+<DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Home | Play The Quiz</title>
+		<link rel="stylesheet" href= "{% static 'quiz/index.css' %}">
+		<link rel="stylesheet" href= "{% static 'quiz/home.css' %}">
+		<script src="{% static 'quiz/jquery-3.3.1.min.js' %}"></script>
+		<script>
+			function check(){
+			tot = 0;
+			var answer_key = {{ answers }};
+			// var ans = [];
+			var userid = {{ userdata.id }}
+			var temp;
+			for(i=0;i<{{ strength }};i++){
+				temp = document.getElementsByName('grp_'+(i+1));
+				for(j=0;j<=3;j++){	
+					if(temp[j].value == answer_key[i] && temp[j].checked){
+						tot++;
+					}
+				}
+			}
+			$('.container').slideUp(function(){
+				$('.result').slideDown(function(){
+					$('.result').delay('slow').prepend("Your Score : " +tot);
+				});
+			});
+			$.ajax({
+				method:'POST',
+				url:"{% url 'trial' %}",
+				data:{
+					tot:tot,
+					userid:userid,
+					csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+				}
+			});
+		}
+		</script>
+		
+	</head>
+	<body>
+		<!-- <h1 align="center" style="margin-top:1cm;">Quiz</h1> -->
+		<div class="header">
+			<h1><span>Quizbook</span></h1>
+			<form action="{% url 'index' %}">
+				{% csrf_token %}
+				<input type="submit" value="Log out" class='logout'>
+			</form>
+		</div><br><br><br><br>
+		<div class="container">
+				{% for x in data %}
+					<div class = 'Q'>
+						<div class="quest">
+							<h2>Q-{{ forloop.counter }})&nbsp;&nbsp;<span>{{ x.question }}</span></h2>
+						</div>
+						<div class="options">
+							<input type="radio" name="grp_{{ x.id }}" id="1_{{x.id }}" value='1'>
+							&nbsp;&nbsp;<label for="1_{{ x.id }}">{{ x.option_1 }}</label><br><br>
+							<input type="radio" name="grp_{{ x.id }}" id="2_{{x.id }}" value="2">
+							&nbsp;&nbsp;<label for="2_{{ x.id }}">{{ x.option_2 }}</label><br><br>
+							<input type="radio" name="grp_{{ x.id }}" id="3_{{x.id }}" value="3">
+							&nbsp;&nbsp;<label for="3_{{ x.id }}">{{ x.option_3 }}</label><br><br>
+							<input type="radio" name="grp_{{ x.id }}" id="4_{{x.id }}" value="4">
+							&nbsp;&nbsp;<label for="4_{{ x.id }}">{{ x.option_4 }}</label><br><br>					
+						</div><br><br>
+					</div>
+				{% endfor %}
+				<button onclick="check();">Submit</button>
+		</div>
+		<div class='result' style="margin-top:5cm;display:none;"></div>
+		<div class='footer'><h2 align="center" style="margin-top:2cm">&copy;SCTPL Internship Project 2018 - By Ashutosh Dhondkar</h2></div>
+	</body>
+</html>
